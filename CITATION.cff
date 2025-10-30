@@ -4,6 +4,7 @@ type: software
 title: "Cosmo Sterile Audit: Reproducible Cosmological Analysis Pipeline"
 version: 1.0.1
 date-released: "2025-01-30"
+doi: 10.5281/zenodo.17482416
 url: "https://github.com/abba-01/cosmo-sterile-audit"
 repository-code: "https://github.com/abba-01/cosmo-sterile-audit"
 license: MIT
