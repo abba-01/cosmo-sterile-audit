@@ -54,13 +54,56 @@ cosmo-sterile-audit/
 
 ## Quick Start
 
+### Option 1: Using run_audit.sh (Recommended)
+```bash
+# Run full pipeline with canonical data URLs
+bash run_audit.sh
+
+# Or with custom URLs
+bash run_audit.sh \
+  --planck1 "https://..." \
+  --planck2 "https://..." \
+  --shoes "https://..." \
+  --gaia "https://..."
+```
+
+### Option 2: Using Makefile Targets
 ```bash
 make init          # create venv/conda; lock deps; build container
+
+# Set environment variables for data sources
+export PLANCK_URL_1="https://..."
+export PLANCK_URL_2="https://..."
+export SHOES_URL_1="https://..."
+export GAIA_URL_1="https://..."
+
 make fetch         # download all raw → data/raw; write checksums
 make verify        # compare SHA-256 to manifests/sources.yml
 make audit         # run MCMC + data integrity audits
 make analyze       # P-L fits, covariance, merge, figures
 make freeze        # tarball results + manifest; print SBOM
+```
+
+### Updating Manifest with Actual Hashes
+After running `make fetch`, update the manifest with computed hashes:
+```bash
+python3 scripts/update_manifest_hashes.py
+git diff manifests/sources.yml  # review changes
+git add manifests/sources.yml && git commit -m "Update manifest with actual SHA-256 hashes"
+```
+
+This replaces placeholder values like `<EXPECTED_SHA256_FROM_*>` with the actual hashes computed during fetch.
+
+### Deterministic Archive (Firesale)
+```bash
+make firesale-preflight  # verify clean tree, sterility, compute merkle
+make firesale            # create deterministic archive
+```
+
+To rebuild and verify from archive:
+```bash
+ARCH=$(ls -1 results/artifacts/firesale_*.tar.gz | head -n1)
+make firesale-rebuild ARCH="$ARCH"
 ```
 
 Run `make help` to see all available targets. Each step is idempotent and logged.
