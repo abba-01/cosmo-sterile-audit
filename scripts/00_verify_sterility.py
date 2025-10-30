@@ -6,6 +6,7 @@ Exit code 0 if sterile, non-zero otherwise.
 
 import os
 import sys
+import subprocess
 from pathlib import Path
 
 
@@ -41,6 +42,37 @@ def check_no_symlinks(repo_root):
         for link in symlinks_found:
             print(f"  - {link}", file=sys.stderr)
         return False
+
+    # External verification using find
+    print("  Running external find verification...")
+    try:
+        result = subprocess.run(
+            ['find', '.', '-type', 'l'],
+            capture_output=True,
+            text=True,
+            cwd=repo_root
+        )
+
+        if result.returncode != 0:
+            print("ERROR: find command failed", file=sys.stderr)
+            return False
+
+        # Filter out .git entries
+        symlinks_external = [
+            line for line in result.stdout.strip().split('\n')
+            if line and not line.startswith('./.git/')
+        ]
+
+        if symlinks_external:
+            print("ERROR: find . -type l detected symlinks:", file=sys.stderr)
+            for link in symlinks_external:
+                print(f"  {link}", file=sys.stderr)
+            return False
+
+    except FileNotFoundError:
+        print("WARNING: find command not available, skipping external verification", file=sys.stderr)
+    except Exception as e:
+        print(f"WARNING: find verification failed: {e}", file=sys.stderr)
 
     return True
 

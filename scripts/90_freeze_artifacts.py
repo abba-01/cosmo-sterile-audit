@@ -63,8 +63,69 @@ def freeze_artifacts():
 
     print(f"✓ Checksums written to {checksum_file}")
     print(f"✓ Provenance written to {prov_file}")
-    print("TODO: Generate SBOM (Software Bill of Materials)")
-    print("TODO: Create release tarball")
+
+    # Generate SBOM
+    print("\n==> Generating Software Bill of Materials...")
+    artifacts_dir = repo_root / "results" / "artifacts"
+    artifacts_dir.mkdir(parents=True, exist_ok=True)
+
+    sbom_file = artifacts_dir / "SBOM.txt"
+    with open(sbom_file, 'w') as f:
+        f.write("# Software Bill of Materials (SBOM)\n")
+        f.write(f"# Generated: {datetime.utcnow().isoformat()}Z\n")
+        f.write(f"# Repository: cosmo-sterile-audit\n")
+
+        # Get git commit if available
+        try:
+            import subprocess
+            result = subprocess.run(['git', 'rev-parse', 'HEAD'],
+                                  capture_output=True, text=True, cwd=repo_root)
+            if result.returncode == 0:
+                f.write(f"# Git commit: {result.stdout.strip()}\n")
+        except:
+            pass
+
+        # Python version
+        import sys as sys_module
+        import platform
+        f.write(f"# Python: {sys_module.version}\n")
+        f.write(f"# Platform: {platform.platform()}\n")
+        f.write("\n# Dependencies:\n")
+
+        # Get installed packages
+        try:
+            import subprocess
+            result = subprocess.run(['pip', 'list', '--format=freeze'],
+                                  capture_output=True, text=True)
+            if result.returncode == 0:
+                f.write(result.stdout)
+        except:
+            f.write("# (pip list unavailable)\n")
+
+    print(f"✓ SBOM written to {sbom_file}")
+
+    # Create release tarball
+    print("\n==> Creating release tarball...")
+    timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+    tarball_name = f"release_{timestamp}.tar.gz"
+    tarball_path = artifacts_dir / tarball_name
+
+    import tarfile
+    with tarfile.open(tarball_path, "w:gz") as tar:
+        # Add results directory
+        tar.add(repo_root / "results", arcname="results")
+        # Add manifests
+        tar.add(repo_root / "manifests", arcname="manifests")
+
+    # Compute tarball hash
+    tarball_hash = compute_sha256(tarball_path)
+    hash_file = artifacts_dir / f"{tarball_name}.sha256"
+    with open(hash_file, 'w') as f:
+        f.write(f"{tarball_hash}  {tarball_name}\n")
+
+    print(f"✓ Release tarball: {tarball_path}")
+    print(f"✓ SHA-256: {tarball_hash}")
+    print(f"✓ Hash file: {hash_file}")
 
     return 0
 

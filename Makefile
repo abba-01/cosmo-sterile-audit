@@ -106,7 +106,7 @@ audit: fetch verify  ## run MCMC + data integrity audits
 	python3 scripts/10_mcmc_audit.py
 	@echo "✓ MCMC audit complete"
 
-analyze:  ## P-L fits, covariance, merge, figures
+analyze: audit  ## P-L fits, covariance, merge, figures
 	@echo "==> Running analysis pipeline..."
 	python3 scripts/20_anchor_prep.py
 	python3 scripts/30_PL_fit_standard.py
@@ -124,7 +124,7 @@ paper:  ## assemble outline → PDF (pandoc) or md
 	fi
 	@echo "✓ Paper outputs ready in results/"
 
-freeze:  ## tarball results + manifest; print SBOM
+freeze: analyze  ## tarball results + manifest; print SBOM
 	@echo "==> Freezing artifacts..."
 	python3 scripts/90_freeze_artifacts.py
 	@echo ""
