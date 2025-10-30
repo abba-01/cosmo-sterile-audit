@@ -1,21 +1,43 @@
-# Data source manifest with DOIs, URLs, and expected SHA-256 checksums
+# Data source manifest with DOIs and expected SHA-256 checksums
 # All sources must be verified before processing
+#
+# URLs MUST be provided via environment variables (see fetch scripts).
+# DO NOT hardcode URLs in this file or in scripts.
+#
+# Expected usage:
+#   PLANCK_URL_1="https://..." PLANCK_URL_2="..." make fetch
 
 planck:
-  description: "Planck 2018 MCMC chains (weighted samples)"
+  description: "Planck 2018 MCMC chains (TTTEEE+lowE, with weights)"
   doi: "10.1051/0004-6361/201833910"
-  url: "https://pla.esac.esa.int/pla/aio/product-action?COSMOLOGY.FILE_ID=COM_CosmoParams_fullGrid_R3.01.tar.gz"
-  expected_sha256: "placeholder_hash_replace_after_first_fetch"
+  reference: "Planck Collaboration. 2020. A&A 641, A6"
+  files:
+    - name: "base_TTTEEE_lowE_chain_1.txt"
+      sha256: "<EXPECTED_SHA256_FROM_AUTHORITATIVE_SITE>"
+      env_var: "PLANCK_URL_1"
+      notes: "Weighted MCMC chain, first segment"
+    - name: "base_TTTEEE_lowE_chain_2.txt"
+      sha256: "<EXPECTED_SHA256_FROM_AUTHORITATIVE_SITE>"
+      env_var: "PLANCK_URL_2"
+      notes: "Weighted MCMC chain, second segment"
 
-shoes:
-  description: "SH0ES distance ladder measurements"
+shoes_vizier:
+  description: "VizieR systematic grid (Riess et al. table)"
   doi: "10.3847/1538-4357/ac5c5b"
-  url: "https://cdsarc.cds.unistra.fr/viz-bin/cat/J/ApJ/934/115"
-  expected_sha256: "placeholder_hash_replace_after_first_fetch"
+  reference: "Riess et al. 2022. ApJ 934, 115"
+  files:
+    - name: "J_ApJ_826_56_table3.csv"
+      sha256: "<EXPECTED_SHA256_FROM_VIZIER>"
+      env_var: "SHOES_URL_1"
+      notes: "Distance modulus measurements with systematic grid"
 
 gaia:
-  description: "Gaia EDR3 parallax subset for Cepheid anchors"
+  description: "Gaia EDR3 Cepheid subset with columns: source_id, parallax, parallax_error, phot_g_mean_mag, bp_rp, ra, dec"
   doi: "10.1051/0004-6361/202039657"
-  url: "https://gea.esac.esa.int/archive/"
-  query: "SELECT * FROM gaiadr3.cepheid WHERE parallax_over_error > 5"
-  expected_sha256: "placeholder_hash_replace_after_first_fetch"
+  reference: "Gaia Collaboration. 2021. A&A 649, A1"
+  query: "SELECT source_id, parallax, parallax_error, phot_g_mean_mag, bp_rp, ra, dec FROM gaiadr3.gaia_source WHERE parallax_over_error > 5 AND in_qso_candidates = 'false' AND in_galaxy_candidates = 'false' AND phot_variable_flag = 'VARIABLE' AND parallax > 0"
+  files:
+    - name: "gaia_edr3_cepheids.csv"
+      sha256: "<EXPECTED_SHA256_FROM_ARCHIVE>"
+      env_var: "GAIA_URL_1"
+      notes: "Pre-filtered Cepheid candidates with high-quality parallaxes"
