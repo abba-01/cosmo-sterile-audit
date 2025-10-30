@@ -1,0 +1,13 @@
+# Ledger SHA-256: f58d7c47682d5a65e2697e2eb581202fc2a663f9b0a806992dcd71a842673fae
+
+Anchor,UHA,H0,Sigma_H0,N_Configs,Gaia_ZP_mas,Metallicity_Corrected,Notes
+MilkyWay,UHA::MilkyWay::Cepheid_DeltaCep::RA337.742_DEC+58.415::ICRS2000,76.13,0.99,23,-0.017,True,Gaia EDR3 parallaxes; ZP corrected; higher metallicity than external
+LMC,UHA::LMC::DEB_Field::RA80.894_DEC-69.756::ICRS2000,72.29,0.8,23,,True,Detached eclipsing binary distance; eclipsing binary parallaxes
+NGC4258,UHA::NGC4258::Maser_Nucleus::RA184.733_DEC+47.304::ICRS2000,72.51,0.83,24,,True,Megamaser distance anchor; geometric distance measurement
+
+# LOAO Analysis Results
+Scenario,Anchors_Included,H0_Local,Sigma_Local,Tension_Sigma
+baseline,MW+LMC+NGC4258,73.64,0.51,8.772
+drop_MW,LMC+NGC4258,72.4,0.58,6.553
+drop_LMC,MW+NGC4258,74.32,0.65,8.472
+drop_NGC4258,MW+LMC,74.21,0.64,8.414

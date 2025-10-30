@@ -1,4 +1,4 @@
-.PHONY: help sterile init fetch verify audit analyze paper freeze clean firesale firesale-preflight firesale-rebuild
+.PHONY: help sterile init fetch verify audit analyze validate-anchors paper freeze clean firesale firesale-preflight firesale-rebuild
 
 # Default target
 help:
@@ -11,6 +11,7 @@ help:
 	@echo "  verify    - compare SHA-256 to manifests/sources.yml"
 	@echo "  audit     - run MCMC + data integrity audits"
 	@echo "  analyze   - P-L fits, covariance, merge, figures"
+	@echo "  validate-anchors - MW anchor SSOT validation with UHA encoding"
 	@echo "  paper     - assemble outline → PDF (pandoc) or md"
 	@echo "  freeze    - tarball results + manifest; print SBOM"
 	@echo "  clean     - clean intermediate files (keeps raw data)"
@@ -116,6 +117,20 @@ analyze: audit  ## P-L fits, covariance, merge, figures
 	python3 scripts/31_PL_fit_conservative.py
 	python3 scripts/40_epistemic_merge.py
 	@echo "✓ Analysis complete"
+
+validate-anchors:  ## MW anchor SSOT validation with UHA encoding
+	@echo "==> Running MW Anchor SSOT Validation..."
+	python3 scripts/validate_mw_anchor_ssot.py
+	@echo ""
+	@echo "✓ SSOT ledger generated:"
+	@echo "  - results/artifacts/ssot_anchor_ledger.json"
+	@echo "  - results/artifacts/ssot_anchor_ledger.csv"
+	@echo "  - results/artifacts/ssot_anchor_ledger.sha256"
+	@echo ""
+	@if [ -f results/artifacts/ssot_anchor_ledger.sha256 ]; then \
+		echo "==> Ledger SHA-256:"; \
+		cat results/artifacts/ssot_anchor_ledger.sha256; \
+	fi
 
 paper:  ## assemble outline → PDF (pandoc) or md
 	@echo "==> Generating paper-ready outputs..."

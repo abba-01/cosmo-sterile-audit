@@ -1,6 +1,6 @@
 {
-  "timestamp": "2025-10-30T08:58:59Z",
-  "merkle_root": "885c28679b1e4e02bde23d835715779d0c166b14b8d6671fe557e1ac0709c85f",
+  "timestamp": "2025-10-30T09:07:33Z",
+  "merkle_root": "665edab35694d529e838bc4c9c7fe502192ccda3383f83d1a0110279d4ed8c72",
   "files": [
     {
       "path": ".gitattributes",
@@ -24,11 +24,11 @@
     },
     {
       "path": "Makefile",
-      "sha256": "aa0a1d728b33d029e78d8df097f38955fe2704736b05d6bcdb4f6856bb76816a"
+      "sha256": "25e2e5976035a8bf34e91b8e18fe0545c0e3ca1d1e677fc33833757e9924293f"
     },
     {
       "path": "README.md",
-      "sha256": "f926438540b6cc31dd62226267b40ff1b39435a6da2c4bf9e95688f1c62a2894"
+      "sha256": "58d64c1103f9ac0e52414b911da0f092232de09741c60bc649aa668246658885"
     },
     {
       "path": "data/external/.keep",
@@ -65,6 +65,26 @@
     {
       "path": "results/artifacts/.keep",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "results/artifacts/HASHES.json",
+      "sha256": "9db906ab59f1d3842329ce77afcdded6e191e70dd96508e07b67c95bfe69083b"
+    },
+    {
+      "path": "results/artifacts/HASHES.txt",
+      "sha256": "d5299a637e4f4fc1d38a144259383605a1a7ead53b478d6ca6e5d570b0746fc4"
+    },
+    {
+      "path": "results/artifacts/ssot_anchor_ledger.csv",
+      "sha256": "0cedc82195f3b4d529023f344056f5a07e6452f16727d85b3b07744acaa6cc95"
+    },
+    {
+      "path": "results/artifacts/ssot_anchor_ledger.json",
+      "sha256": "97065a878158f908005acfa9903fa2dcbcad777a185629a3e649389a229b4b8b"
+    },
+    {
+      "path": "results/artifacts/ssot_anchor_ledger.sha256",
+      "sha256": "3e686eb871fabff7eeab3d5b922b1ac07909ffe45da167f44f42627e9b9d4901"
     },
     {
       "path": "results/figures/.keep",
@@ -133,6 +153,14 @@
     {
       "path": "scripts/firesale_rebuild.sh",
       "sha256": "a3f3428afc3af3ba5ca2cde97d6e4b9c3ee4f6219fd54bf5530b11b8d40b210f"
+    },
+    {
+      "path": "scripts/update_manifest_hashes.py",
+      "sha256": "27b189219c24ecca186ed525e4944385ceb8d4d2f047cba989678e6a329e5205"
+    },
+    {
+      "path": "scripts/validate_mw_anchor_ssot.py",
+      "sha256": "665b253aa4a98606b9ac733e927e1629d73cfcb41e5a30b50363e0ce1f53f059"
     }
   ]
 }

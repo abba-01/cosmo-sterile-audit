@@ -1,0 +1,123 @@
+{
+  "metadata": {
+    "timestamp": "2025-10-30T11:05:23.567114+00:00",
+    "script_version": "1.0.0",
+    "random_seed": 42,
+    "repository": "https://github.com/abba-01/cosmo-sterile-audit",
+    "doi": "10.5281/zenodo.17482416",
+    "ledger_sha256": "f58d7c47682d5a65e2697e2eb581202fc2a663f9b0a806992dcd71a842673fae"
+  },
+  "planck_baseline": {
+    "h0": 67.4,
+    "sigma": 0.5,
+    "reference": "Planck 2018 (doi: 10.1051/0004-6361/201833910)"
+  },
+  "anchors": [
+    {
+      "anchor_id": "MilkyWay",
+      "UHA": "UHA::MilkyWay::Cepheid_DeltaCep::RA337.742_DEC+58.415::ICRS2000",
+      "h0_raw": 76.13,
+      "sigma_h0": 0.99,
+      "n_configurations": 23,
+      "observer_tensor": [
+        0.9669,
+        0.01,
+        -0.2162,
+        0.5
+      ],
+      "gaia_zp_correction_mas": -0.017,
+      "metallicity_corrected": true,
+      "systematic_notes": "Gaia EDR3 parallaxes; ZP corrected; higher metallicity than external"
+    },
+    {
+      "anchor_id": "LMC",
+      "UHA": "UHA::LMC::DEB_Field::RA80.894_DEC-69.756::ICRS2000",
+      "h0_raw": 72.29,
+      "sigma_h0": 0.8,
+      "n_configurations": 23,
+      "observer_tensor": [
+        0.962,
+        0.01,
+        -0.1307,
+        0.5
+      ],
+      "gaia_zp_correction_mas": null,
+      "metallicity_corrected": true,
+      "systematic_notes": "Detached eclipsing binary distance; eclipsing binary parallaxes"
+    },
+    {
+      "anchor_id": "NGC4258",
+      "UHA": "UHA::NGC4258::Maser_Nucleus::RA184.733_DEC+47.304::ICRS2000",
+      "h0_raw": 72.51,
+      "sigma_h0": 0.83,
+      "n_configurations": 24,
+      "observer_tensor": [
+        0.9648,
+        0.01,
+        -0.136,
+        0.5
+      ],
+      "gaia_zp_correction_mas": null,
+      "metallicity_corrected": true,
+      "systematic_notes": "Megamaser distance anchor; geometric distance measurement"
+    }
+  ],
+  "loao_analysis": {
+    "baseline": {
+      "anchors_included": [
+        "MW",
+        "LMC",
+        "NGC4258"
+      ],
+      "h0_local": 73.64,
+      "sigma_local": 0.51,
+      "tension_sigma": 8.772
+    },
+    "drop_MW": {
+      "anchors_included": [
+        "LMC",
+        "NGC4258"
+      ],
+      "h0_local": 72.4,
+      "sigma_local": 0.58,
+      "tension_sigma": 6.553
+    },
+    "drop_LMC": {
+      "anchors_included": [
+        "MW",
+        "NGC4258"
+      ],
+      "h0_local": 74.32,
+      "sigma_local": 0.65,
+      "tension_sigma": 8.472
+    },
+    "drop_NGC4258": {
+      "anchors_included": [
+        "MW",
+        "LMC"
+      ],
+      "h0_local": 74.21,
+      "sigma_local": 0.64,
+      "tension_sigma": 8.414
+    }
+  },
+  "epistemic_framework": {
+    "delta_T": 1.44,
+    "f_sys": 0.01,
+    "description": "Observer tensor distance and systematic fraction"
+  },
+  "merged_result": {
+    "h0_merged": 70.46,
+    "sigma_merged": 9.04,
+    "raw_tension_kms": 6.24,
+    "sigma_stat": 0.71,
+    "penalty_observer": 8.99,
+    "penalty_systematic": 0.71,
+    "residual_tension_sigma": 0.338
+  },
+  "validation": {
+    "final_tension_sigma": 0.338,
+    "tension_threshold": 1.0,
+    "validation_passed": true
+  }
+}
