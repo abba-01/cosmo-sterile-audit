@@ -1,0 +1,7 @@
+{
+  "version": "1.0.0",
+  "generated_at": null,
+  "repository": "cosmo-sterile-audit",
+  "files": {},
+  "comment": "This file tracks file -> hash -> script -> environment provenance. Populated by scripts/90_freeze_artifacts.py"
+}

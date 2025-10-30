@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Cosmo Sterile Audit: Reproducible Cosmological Analysis Pipeline"
+version: 1.0.0
+date-released: 2025-01-15
+authors:
+  - family-names: "Placeholder"
+    given-names: "Author"
+    orcid: "https://orcid.org/0000-0000-0000-0000"
+license: MIT
+repository-code: "https://github.com/placeholder/cosmo-sterile-audit"
+keywords:
+  - cosmology
+  - reproducibility
+  - sterile-neutrinos
+  - hubble-tension
+  - mcmc-analysis

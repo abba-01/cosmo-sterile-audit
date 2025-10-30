@@ -1,0 +1,21 @@
+# Data source manifest with DOIs, URLs, and expected SHA-256 checksums
+# All sources must be verified before processing
+
+planck:
+  description: "Planck 2018 MCMC chains (weighted samples)"
+  doi: "10.1051/0004-6361/201833910"
+  url: "https://pla.esac.esa.int/pla/aio/product-action?COSMOLOGY.FILE_ID=COM_CosmoParams_fullGrid_R3.01.tar.gz"
+  expected_sha256: "placeholder_hash_replace_after_first_fetch"
+
+shoes:
+  description: "SH0ES distance ladder measurements"
+  doi: "10.3847/1538-4357/ac5c5b"
+  url: "https://cdsarc.cds.unistra.fr/viz-bin/cat/J/ApJ/934/115"
+  expected_sha256: "placeholder_hash_replace_after_first_fetch"
+
+gaia:
+  description: "Gaia EDR3 parallax subset for Cepheid anchors"
+  doi: "10.1051/0004-6361/202039657"
+  url: "https://gea.esac.esa.int/archive/"
+  query: "SELECT * FROM gaiadr3.cepheid WHERE parallax_over_error > 5"
+  expected_sha256: "placeholder_hash_replace_after_first_fetch"
