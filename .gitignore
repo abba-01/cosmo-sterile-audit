@@ -50,7 +50,12 @@ Thumbs.db
 *.bak
 .cache/
 
-# Firesale archives
+# Firesale archives and rebuild directories
 firesale_*.tar.gz
 firesale_*.sha256
+firesale_*_rebuild/
 cosmo-sterile-audit_*.tar.gz
+release_*.tar.gz
+
+# Environment persistence
+.env.local

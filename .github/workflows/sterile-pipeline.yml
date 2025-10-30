@@ -182,3 +182,24 @@ jobs:
             echo "SBOM generated:"
             head -20 results/artifacts/SBOM.txt
           fi
+
+  firesale:
+    needs: [sterile-pipeline]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-python@v4
+        with: { python-version: '3.11' }
+      - name: Install minimal deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas pyyaml
+      - name: Firesale package
+        run: |
+          make firesale-preflight
+          make firesale
+      - name: Rebuild sterile from artifact
+        run: |
+          ARCH=$(ls -1 results/artifacts/firesale_*.tar.gz | head -n1)
+          make firesale-rebuild ARCH="$ARCH"
