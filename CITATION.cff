@@ -1,17 +1,68 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
+type: software
 title: "Cosmo Sterile Audit: Reproducible Cosmological Analysis Pipeline"
-version: 1.0.0
-date-released: 2025-01-15
-authors:
-  - family-names: "Placeholder"
-    given-names: "Author"
-    orcid: "https://orcid.org/0000-0000-0000-0000"
+version: 1.0.1
+date-released: "2025-01-30"
+url: "https://github.com/abba-01/cosmo-sterile-audit"
+repository-code: "https://github.com/abba-01/cosmo-sterile-audit"
 license: MIT
-repository-code: "https://github.com/placeholder/cosmo-sterile-audit"
+doi: 10.5281/zenodo.XXXXXXX
+abstract: >-
+  A reproducible pipeline for auditing cosmological parameter constraints with
+  strict data hygiene and provenance tracking. Includes MCMC convergence
+  diagnostics (ArviZ: R-hat, ESS), Period-Luminosity calibration with anchor
+  preparation, epistemic uncertainty merge, and deterministic archival with
+  Merkle tree verification. Features HTTPS-only data fetch, SHA-256 verification,
+  content-addressable storage, full provenance tracking, and GitHub Actions CI/CD.
+authors:
+  - family-names: "Your-Last-Name"
+    given-names: "Your-First-Name"
+    email: "your.email@example.com"
+    affiliation: "Your Institution"
+    orcid: "https://orcid.org/0000-0000-0000-0000"
 keywords:
   - cosmology
   - reproducibility
-  - sterile-neutrinos
-  - hubble-tension
-  - mcmc-analysis
+  - provenance
+  - MCMC
+  - distance-ladder
+  - Hubble-constant
+  - sterile-pipeline
+  - merkle-tree
+  - data-integrity
+  - Period-Luminosity
+  - Cepheids
+  - Gaia
+  - Planck
+  - SH0ES
+references:
+  - type: article
+    title: "Planck 2018 results. VI. Cosmological parameters"
+    authors:
+      - name: "Planck Collaboration"
+    journal: "Astronomy & Astrophysics"
+    year: 2020
+    volume: 641
+    pages: "A6"
+    doi: "10.1051/0004-6361/201833910"
+  - type: article
+    title: "A Comprehensive Measurement of the Local Value of the Hubble Constant with 1 km/s/Mpc Uncertainty from the Hubble Space Telescope and the SH0ES Team"
+    authors:
+      - family-names: "Riess"
+        given-names: "Adam G."
+    journal: "The Astrophysical Journal"
+    year: 2022
+    volume: 934
+    issue: 2
+    pages: "L7"
+    doi: "10.3847/2041-8213/ac5c5b"
+  - type: article
+    title: "Gaia Early Data Release 3. Summary of the contents and survey properties"
+    authors:
+      - name: "Gaia Collaboration"
+    journal: "Astronomy & Astrophysics"
+    year: 2021
+    volume: 649
+    pages: "A1"
+    doi: "10.1051/0004-6361/202039657"
