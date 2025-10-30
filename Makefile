@@ -101,7 +101,7 @@ verify:  ## compare SHA-256 to manifests/sources.yml
 		exit 1; \
 	fi
 
-audit:  ## run MCMC + data integrity audits
+audit: fetch verify  ## run MCMC + data integrity audits
 	@echo "==> Auditing MCMC chains..."
 	python3 scripts/10_mcmc_audit.py
 	@echo "✓ MCMC audit complete"
