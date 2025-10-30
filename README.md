@@ -107,3 +107,18 @@ make firesale-rebuild ARCH="$ARCH"
 ```
 
 Run `make help` to see all available targets. Each step is idempotent and logged.
+
+## Citation
+
+If you use this software in your research, please cite it using the metadata in `CITATION.cff`.
+
+### Zenodo DOI
+
+To mint a permanent DOI for this repository through Zenodo:
+- See the complete guide: [`docs/ZENODO_DOI_GUIDE.md`](docs/ZENODO_DOI_GUIDE.md)
+- Quick checklist: [`docs/ZENODO_CHECKLIST.md`](docs/ZENODO_CHECKLIST.md)
+
+Once a DOI is minted, it will appear here:
+```
+DOI: 10.5281/zenodo.XXXXXXX (to be added after Zenodo integration)
+```
