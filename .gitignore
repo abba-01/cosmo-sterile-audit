@@ -49,3 +49,8 @@ Thumbs.db
 *.tmp
 *.bak
 .cache/
+
+# Firesale archives
+firesale_*.tar.gz
+firesale_*.sha256
+cosmo-sterile-audit_*.tar.gz

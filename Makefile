@@ -1,4 +1,4 @@
-.PHONY: help sterile init fetch verify audit analyze paper freeze clean
+.PHONY: help sterile init fetch verify audit analyze paper freeze clean firesale
 
 # Default target
 help:
@@ -14,6 +14,7 @@ help:
 	@echo "  paper     - assemble outline → PDF (pandoc) or md"
 	@echo "  freeze    - tarball results + manifest; print SBOM"
 	@echo "  clean     - clean intermediate files (keeps raw data)"
+	@echo "  firesale  - archive repo, hash it, burn to clean state"
 	@echo ""
 	@echo "Full pipeline: make init fetch verify audit analyze freeze"
 
@@ -151,3 +152,70 @@ clean:  ## clean intermediate files (keeps raw data)
 	@find . -type f -name "*.pyc" -delete
 	@find data/raw -name '.tmp_*' -delete 2>/dev/null || true
 	@echo "✓ Cleaned (raw data preserved)"
+
+firesale:  ## archive repo, hash it, burn to clean state
+	@echo "==> FIRESALE: Archiving repository state..."
+	@echo ""
+	@TIMESTAMP=$$(date -u +%Y%m%d_%H%M%S); \
+	COMMIT_HASH=$$(git rev-parse --short HEAD 2>/dev/null || echo "unknown"); \
+	TARBALL="firesale_$${COMMIT_HASH}_$${TIMESTAMP}.tar.gz"; \
+	echo "Creating archive: $$TARBALL"; \
+	tar czf $$TARBALL \
+		--exclude='.git' \
+		--exclude='venv' \
+		--exclude='__pycache__' \
+		--exclude='*.pyc' \
+		--exclude='.tmp_*' \
+		--exclude='firesale_*.tar.gz' \
+		--exclude='firesale_*.sha256' \
+		. ; \
+	echo "✓ Archive created: $$TARBALL"; \
+	echo ""; \
+	echo "Computing SHA-256 hash..."; \
+	HASH=$$(sha256sum $$TARBALL | awk '{print $$1}'); \
+	echo "$$HASH  $$TARBALL" > "firesale_$${COMMIT_HASH}_$${TIMESTAMP}.sha256"; \
+	echo "✓ Hash saved to: firesale_$${COMMIT_HASH}_$${TIMESTAMP}.sha256"; \
+	echo ""; \
+	echo "Archive hash:"; \
+	cat "firesale_$${COMMIT_HASH}_$${TIMESTAMP}.sha256"; \
+	echo ""; \
+	echo "==> BURNING DOWN to clean state..."; \
+	echo ""; \
+	echo "Removing downloaded data..."; \
+	find data/raw -mindepth 1 ! -name '.keep' -delete 2>/dev/null || true; \
+	chmod -R u+w data/raw 2>/dev/null || true; \
+	find data/raw -mindepth 1 ! -name '.keep' -exec rm -rf {} + 2>/dev/null || true; \
+	echo "✓ data/raw/ cleared"; \
+	echo ""; \
+	echo "Removing intermediate data..."; \
+	rm -rf data/interim/* data/processed/* data/external/* 2>/dev/null || true; \
+	echo "✓ data/interim/, data/processed/, data/external/ cleared"; \
+	echo ""; \
+	echo "Removing results..."; \
+	rm -rf results/figures/* results/tables/* results/artifacts/* 2>/dev/null || true; \
+	echo "✓ results/ cleared"; \
+	echo ""; \
+	echo "Removing virtual environment..."; \
+	rm -rf venv 2>/dev/null || true; \
+	echo "✓ venv/ removed"; \
+	echo ""; \
+	echo "Removing Python cache..."; \
+	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true; \
+	find . -type f -name "*.pyc" -delete 2>/dev/null || true; \
+	echo "✓ Python cache cleared"; \
+	echo ""; \
+	echo "Resetting manifests..."; \
+	git checkout -- manifests/checksums.sha256 manifests/provenance.json 2>/dev/null || true; \
+	echo "✓ manifests/ reset to git state"; \
+	echo ""; \
+	echo ""; \
+	echo "╔════════════════════════════════════════════════════════════════╗"; \
+	echo "║                    🔥 FIRESALE COMPLETE 🔥                    ║"; \
+	echo "╚════════════════════════════════════════════════════════════════╝"; \
+	echo ""; \
+	echo "Archive: $$TARBALL"; \
+	echo "Hash:    $$HASH"; \
+	echo ""; \
+	echo "Repository burned to clean state."; \
+	echo "To restore: tar xzf $$TARBALL"; \
+	echo ""
